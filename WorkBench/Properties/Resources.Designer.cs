@@ -63,6 +63,16 @@ namespace WorkBench.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap bold {
+            get {
+                object obj = ResourceManager.GetObject("bold", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap font_color {
             get {
                 object obj = ResourceManager.GetObject("font_color", resourceCulture);
@@ -73,9 +83,9 @@ namespace WorkBench.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap ico {
+        internal static System.Drawing.Bitmap font_strike {
             get {
-                object obj = ResourceManager.GetObject("ico", resourceCulture);
+                object obj = ResourceManager.GetObject("font_strike", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +93,19 @@ namespace WorkBench.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap save_dis {
+        internal static System.Drawing.Bitmap font_strike1 {
             get {
-                object obj = ResourceManager.GetObject("save_dis", resourceCulture);
+                object obj = ResourceManager.GetObject("font_strike1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap italic {
+            get {
+                object obj = ResourceManager.GetObject("italic", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -106,6 +126,26 @@ namespace WorkBench.Properties {
         internal static System.Drawing.Bitmap save_gray {
             get {
                 object obj = ResourceManager.GetObject("save_gray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap strike {
+            get {
+                object obj = ResourceManager.GetObject("strike", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap underline {
+            get {
+                object obj = ResourceManager.GetObject("underline", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

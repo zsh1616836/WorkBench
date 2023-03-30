@@ -29,6 +29,7 @@ namespace WorkBench
                     control = new Label();
                     break;
             }
+
             control.OpenDoubleBuffer();
             return control;
         }
@@ -77,6 +78,7 @@ namespace WorkBench
             int placeCount = 0;
             if (tp.HeaderVisible)
                 placeCount = 1;
+            tp.RowCount = rows.Children.Count;
             foreach (var t in rows.Children)
             {
                 tp.RowStyles.Add(CreateSytle<RowStyle>(t));
@@ -94,6 +96,10 @@ namespace WorkBench
                         int.TryParse(ctlNode.Attribute("row_span").Value, out row_span);
                     if (ctlNode.Attribute("col_span") != null)
                         int.TryParse(ctlNode.Attribute("col_span").Value, out col_span);
+                    if (row_span > rows.Children.Count - i)
+                        row_span = rows.Children.Count - i;
+                    if (col_span > tp.ColumnCount - c)
+                        col_span = tp.ColumnCount - c;
                     tp.SetRowSpan(ctl, row_span);
                     tp.SetColumnSpan(ctl, col_span);
                     tp.Controls.Add(ctl, c, placeCount + i);

@@ -53,7 +53,8 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ico.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -115,22 +116,31 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="save_dis.png" />
+    <None Include="Resources\save_gray.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="save_en.png" />
+    <None Include="Resources\save_en.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="save_gray.png" />
+    <None Include="Resources\font_color.gif" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ico.png" />
+    <None Include="Resources\font_strike.gif" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="font_color.gif" />
+    <None Include="Resources\strike.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ico.ico" />
+    <None Include="Resources\underline.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\italic.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bold.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\font_strike1.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
