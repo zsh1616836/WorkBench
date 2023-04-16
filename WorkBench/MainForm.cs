@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -17,10 +18,13 @@ namespace WorkBench
 
         private ColorDialog _colorDialog;
 
+        public static string CurrentPath;
+
         public MainForm()
         {
             InitializeComponent();
 
+            CurrentPath = Application.StartupPath;
             LoadConfig();
             Shown += MainForm_Shown;
             Closing += MainForm_Closing;
@@ -64,14 +68,15 @@ namespace WorkBench
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            string memoFile = Path.Combine(Application.StartupPath, "memo.txt");
+            string memoFile = Path.Combine(CurrentPath, "memo.txt");
             FileStream stream = new FileStream(memoFile, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite);
             _memoWriter = new StreamWriter(stream, Encoding.ASCII);
+            this.BringWindowToFront();
         }
 
         private void LoadConfig()
         {
-            string configFile = Path.Combine(Application.StartupPath, "config.xml");
+            string configFile = Path.Combine(CurrentPath, "config.xml");
             Node pages;
             try
             {
@@ -177,7 +182,17 @@ namespace WorkBench
 
         private void config_file_menu_Click(object sender, EventArgs e)
         {
-            Process.Start(Path.Combine(Application.StartupPath, "config.xml"));
+            string configPath = Path.Combine(CurrentPath, "config.xml");
+            if (!File.Exists(configPath))
+            {
+                Node root = new Node("auto");
+                root.AddChild("pages");
+                root.AddAttribute("memo_size", "350");
+                XmlWriter writer = new XmlWriter(configPath);
+                writer.Write(root);
+            }
+
+            Process.Start(configPath);
         }
 
         private void save_memo_menu_Click(object sender, EventArgs e)

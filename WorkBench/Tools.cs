@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 
 namespace WorkBench
@@ -43,6 +46,21 @@ namespace WorkBench
 
             Directory.Delete(targetDir, false);
             return true;
+        }
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        internal static extern bool SwitchToThisWindow(IntPtr hWnd, bool fAltTab);
+
+        internal static void BringWindowToFront(this Form form)
+        {
+            if (form.InvokeRequired)
+            {
+                form.Invoke(new Action(delegate { SwitchToThisWindow(form.Handle, true); }));
+            }
+            else
+            {
+                SwitchToThisWindow(form.Handle, true);
+            }
         }
     }
 }

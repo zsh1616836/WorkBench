@@ -1,1 +1,4 @@
 .vs
+bin
+Update/obj
+WorkBench/obj
