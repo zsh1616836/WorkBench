@@ -20,7 +20,7 @@ namespace WorkBench
             Text = page.Attribute("name").Value;
             Node node = page.Children[0];
             Controls.Clear();
-            Control ctl = ControlFactory.LoadControl(node);
+            Control ctl = LayoutLoader.LoadControl(node);
             if (ctl != null)
                 Controls.Add(ctl);
             ResumeLayout();

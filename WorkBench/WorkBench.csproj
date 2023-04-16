@@ -72,7 +72,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControlFactory.cs" />
+    <Compile Include="ClickLinkLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LayoutLoader.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

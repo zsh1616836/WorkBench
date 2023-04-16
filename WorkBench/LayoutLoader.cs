@@ -6,7 +6,7 @@ using xmlExplain;
 
 namespace WorkBench
 {
-    internal class ControlFactory
+    internal class LayoutLoader
     {
         public static Control LoadControl(Node node)
         {
@@ -63,6 +63,7 @@ namespace WorkBench
             LoadRows(table.Child("rows"), tp);
             tp.BorderStyle = BorderStyle.FixedSingle;
 
+            //LoadImg(table, tp);
             tp.ResumeLayout();
             tp.PerformLayout();
             Panel panel = new Panel();
@@ -70,6 +71,7 @@ namespace WorkBench
             panel.AutoScroll = true;
             panel.Dock = DockStyle.Fill;
             panel.Margin = new Padding(0);
+            LoadImg(table, panel);
             return panel;
         }
 
@@ -165,6 +167,32 @@ namespace WorkBench
             return head;
         }
 
+        private static ImageLayout GetImageLayout(string imgLyt)
+        {
+            switch (imgLyt)
+            {
+                case "0":
+                    return ImageLayout.Tile;
+                case "1":
+                    return ImageLayout.Zoom;
+                case "2":
+                    return ImageLayout.Stretch;
+            }
+
+            return ImageLayout.None;
+        }
+
+        private static void LoadImg(Node action, Control control)
+        {
+            string img = action.Attribute("img") != null ? action.Attribute("img").Value : null;
+            string imgLyt = action.Attribute("img_lyt") != null ? action.Attribute("img_lyt").Value : "1";
+            if (img != null)
+            {
+                control.BackgroundImage = Image.FromFile(img);
+                control.BackgroundImageLayout = GetImageLayout(imgLyt);
+            }
+        }
+
         public static Button LoadStart(Node action)
         {
             Button button = new Button();
@@ -175,11 +203,13 @@ namespace WorkBench
             button.Margin = new Padding(1);
             button.Text = action.Attribute("text") != null ? action.Attribute("text").Value : "xxx";
             button.UseVisualStyleBackColor = true;
+            LoadImg(action, button);
 
             button.FlatAppearance.MouseDownBackColor = Color.DarkGray;
             string app = action.Attribute("app").Value;
             string param = action.Attribute("command").Value;
             string workingDir = action.Attribute("working_dir") != null ? action.Attribute("working_dir").Value : "";
+
             button.Click += delegate
             {
                 try
@@ -211,12 +241,13 @@ namespace WorkBench
 
         public static LinkLabel LoadLink(Node action)
         {
-            LinkLabel linkLabel = new LinkLabel();
+            ClickLinkLabel linkLabel = new ClickLinkLabel();
             linkLabel.AutoSize = true;
             linkLabel.Dock = DockStyle.Fill;
             linkLabel.TabStop = true;
             linkLabel.Text = action.Attribute("text") != null ? action.Attribute("text").Value : "xxx";
             linkLabel.TextAlign = ContentAlignment.MiddleCenter;
+            LoadImg(action, linkLabel);
             string url = action.Attribute("url") != null ? action.Attribute("url").Value : "";
             if (url.Length > 0)
             {
@@ -233,6 +264,7 @@ namespace WorkBench
             lab.Dock = DockStyle.Fill;
             lab.Text = label.Attribute("text") != null ? label.Attribute("text").Value : "xxx";
             lab.TextAlign = ContentAlignment.MiddleCenter;
+            LoadImg(label, lab);
             return lab;
         }
     }
