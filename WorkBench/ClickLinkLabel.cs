@@ -19,6 +19,7 @@ namespace WorkBench
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
+            BackColor = Color.LightGray;
             base.OnMouseDown(e);
             _mouseDown = true;
             Invalidate();
@@ -26,7 +27,8 @@ namespace WorkBench
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            base.OnMouseUp(e);
+            BackColor = Color.White;
+            //base.OnMouseUp(e);
             if (_mouseDown && ClientRectangle.Contains(e.Location))
             {
                 OnLinkClicked(new LinkLabelLinkClickedEventArgs(Links[0]));
@@ -34,16 +36,6 @@ namespace WorkBench
 
             _mouseDown = false;
             Invalidate();
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-            if (_mouseDown)
-            {
-                ControlPaint.DrawBorder(e.Graphics, ClientRectangle,
-                    Color.Black, ButtonBorderStyle.Inset);
-            }
         }
     }
 }
