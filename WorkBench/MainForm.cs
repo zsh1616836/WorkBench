@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -12,8 +10,6 @@ namespace WorkBench
 {
     public partial class MainForm : Form
     {
-        private readonly Dictionary<string, TabPage> _pages = new Dictionary<string, TabPage>();
-
         private StreamWriter _memoWriter;
 
         private ColorDialog _colorDialog;
@@ -29,30 +25,33 @@ namespace WorkBench
             Shown += MainForm_Shown;
             Closing += MainForm_Closing;
             memo_box.TextChanged += Memo_box_TextChanged;
-            //memo_box.KeyDown += Memo_box_KeyDown;
             this.OpenDoubleBuffer();
-            //KeyDown += MainForm_KeyDown;
-            //tab_panel.KeyDown += MainForm_KeyDown;
+            KeyDown += MainForm_KeyDown;
+            main_table_panel.KeyDown += MainForm_KeyDown;
+            tab_panel.KeyDown += MainForm_KeyDown;
         }
 
-        /*private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.F5)
-            {
-                tab_panel.Controls.Clear();
-                _memoWriter.Close();
-                LoadConfig();
-                MainForm_Shown(null, null);
-            }
-        }*/
-
-        /*private void Memo_box_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.S)
-            {
-                memo_save_btn_Click(null, null);
-            }
-        }*/
+            if (e.KeyCode == Keys.D1)
+                tab_panel.SelectedIndex = 0;
+            else if (e.KeyCode == Keys.D2)
+                tab_panel.SelectedIndex = 1;
+            else if (e.KeyCode == Keys.D3)
+                tab_panel.SelectedIndex = 2;
+            else if (e.KeyCode == Keys.D4)
+                tab_panel.SelectedIndex = 3;
+            else if (e.KeyCode == Keys.D5)
+                tab_panel.SelectedIndex = 4;
+            else if (e.KeyCode == Keys.D6)
+                tab_panel.SelectedIndex = 5;
+            else if (e.KeyCode == Keys.D7)
+                tab_panel.SelectedIndex = 6;
+            else if (e.KeyCode == Keys.D8)
+                tab_panel.SelectedIndex = 7;
+            else if (e.KeyCode == Keys.D9)
+                tab_panel.SelectedIndex = 8;
+        }
 
         private void Memo_box_TextChanged(object sender, EventArgs e)
         {

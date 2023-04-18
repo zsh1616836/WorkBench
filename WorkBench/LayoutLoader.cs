@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -8,6 +9,8 @@ namespace WorkBench
 {
     internal class LayoutLoader
     {
+        private static readonly Dictionary<string, Image> Images = new Dictionary<string, Image>();
+
         public static Control LoadControl(Node node)
         {
             Control control = null;
@@ -18,9 +21,11 @@ namespace WorkBench
                     break;
                 case "start":
                     control = LoadStart(node);
+                    control.Cursor = Cursors.Hand;
                     break;
                 case "link":
                     control = LoadLink(node);
+                    control.Cursor = Cursors.Hand;
                     break;
                 case "label":
                     control = LoadLabel(node);
@@ -38,6 +43,7 @@ namespace WorkBench
         {
             TablePanel tp = new TablePanel();
             tp.OpenDoubleBuffer();
+            tp.SuspendLayout();
             if (table.Attribute("dock") != null && table.Attribute("dock").Value == "fill")
             {
                 tp.Dock = DockStyle.Fill;
@@ -57,7 +63,6 @@ namespace WorkBench
 
             tp.Margin = new Padding(0);
             tp.Name = "page_panel";
-            tp.SuspendLayout();
             tp.HeaderVisible = table.Attribute("head") != null && table.Attribute("head").Value == "1";
             LoadColumns(table.Child("cols"), tp);
             LoadRows(table.Child("rows"), tp);
@@ -182,13 +187,30 @@ namespace WorkBench
             return ImageLayout.None;
         }
 
+        private static Image GetImage(string img)
+        {
+            if (!Images.ContainsKey(img))
+            {
+                try
+                {
+                    Images[img] = Image.FromFile(img);
+                }
+                catch (Exception)
+                {
+                    return Properties.Resources.error;
+                }
+            }
+
+            return Images[img];
+        }
+
         private static void LoadImg(Node action, Control control)
         {
             string img = action.Attribute("img") != null ? action.Attribute("img").Value : null;
             string imgLyt = action.Attribute("img_lyt") != null ? action.Attribute("img_lyt").Value : "1";
             if (img != null)
             {
-                control.BackgroundImage = Image.FromFile(img);
+                control.BackgroundImage = GetImage(img);
                 control.BackgroundImageLayout = GetImageLayout(imgLyt);
             }
         }
@@ -239,22 +261,33 @@ namespace WorkBench
             return button;
         }
 
-        public static LinkLabel LoadLink(Node action)
+        public static Button LoadLink(Node action)
         {
-            ClickLinkLabel linkLabel = new ClickLinkLabel();
-            linkLabel.AutoSize = true;
-            linkLabel.Dock = DockStyle.Fill;
-            linkLabel.TabStop = true;
-            linkLabel.Text = action.Attribute("text") != null ? action.Attribute("text").Value : "xxx";
-            linkLabel.TextAlign = ContentAlignment.MiddleCenter;
-            LoadImg(action, linkLabel);
-            string url = action.Attribute("url") != null ? action.Attribute("url").Value : "";
-            if (url.Length > 0)
-            {
-                linkLabel.LinkClicked += delegate { Process.Start(url); };
-            }
+            Button button = new Button();
+            button.Dock = DockStyle.Fill;
+            button.FlatAppearance.BorderSize = 0;
+            button.FlatStyle = FlatStyle.Flat;
+            button.ForeColor = Color.Blue;
+            button.Margin = new Padding(1);
+            button.Text = action.Attribute("text") != null ? action.Attribute("text").Value : "xxx";
+            button.UseVisualStyleBackColor = true;
+            LoadImg(action, button);
 
-            return linkLabel;
+            button.FlatAppearance.MouseDownBackColor = Color.DarkGray;
+            string url = action.Attribute("url").Value;
+
+            button.Click += delegate
+            {
+                try
+                {
+                    Process.Start(url);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.ToString(), @"Error", MessageBoxButtons.OK);
+                }
+            };
+            return button;
         }
 
         public static Label LoadLabel(Node label)

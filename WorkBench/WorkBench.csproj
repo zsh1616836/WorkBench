@@ -146,6 +146,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ico.ico" />
+    <None Include="Resources\ErrorDot.png" />
+    <None Include="Resources\error.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
