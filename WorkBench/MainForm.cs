@@ -51,6 +51,8 @@ namespace WorkBench
                 tab_panel.SelectedIndex = 7;
             else if (e.KeyCode == Keys.D9)
                 tab_panel.SelectedIndex = 8;
+            else if (e.KeyCode == Keys.D0)
+                tab_panel.SelectedIndex = 9;
         }
 
         private void Memo_box_TextChanged(object sender, EventArgs e)

@@ -150,4 +150,9 @@
     <None Include="Resources\error.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if not exist "$(SolutionDir)release_dir\" mkdir "$(SolutionDir)release_dir\" 
+echo F|xcopy /Y "$(TargetPath)" "$(SolutionDir)release_dir\$(TargetFileName)"
+echo F|xcopy /Y "$(TargetDir)xmlExplain.dll" "$(SolutionDir)release_dir\xmlExplain.dll"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
